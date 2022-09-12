@@ -11,14 +11,22 @@ const obj = {
     }
 };
 
-function convert(obj) {
-    return {
-        x: obj.inner.x,
-        y: obj.y,
-        z: obj.inner.z,
-        k: obj.foo2.k,
-        p: obj.foo2.p,
-    };
+function createNewObj(obj){
+    let newObject = {};
+    return fillObject({},obj);
 }
-console.log(obj);
-console.log(convert(obj));
+
+function fillObject(newObject, obj){
+    for(let key in obj){
+        if(typeof obj[key] === 'object'){
+            let innerObj = obj[key];
+            fillObject(newObject, innerObj);
+        } else{
+            newObject[key] = obj[key];
+        }
+    }
+    return newObject;
+}
+
+console.log(obj)
+console.log( createNewObj(obj) );
